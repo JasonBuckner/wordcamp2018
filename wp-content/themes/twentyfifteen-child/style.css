@@ -17,11 +17,6 @@ Use it to make something cool, have fun, and share what you've learned with othe
 
 body {
 
-    background: rgb(255, 230, 0);
+    background: rgb(2, 128, 54);
 
-}
-
-.entry-content h1, .entry-summary h1, .page-content h1, .comment-content h1 {
-    font-size: 77px;
-    font-size: 7.7rem;
 }
