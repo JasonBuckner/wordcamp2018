@@ -8,9 +8,14 @@ class Builder_Contact_Admin {
 	}
 
 	public function setup_options() {
-		$is_themify_theme = file_exists( trailingslashit( get_template_directory() ) . 'themify/themify-utils.php' );
-		$parent_page = $is_themify_theme ? 'themify' : 'themify-builder';
-		add_submenu_page( $parent_page, __( 'Contact Module', 'builder-contact' ), __( 'Contact Module', 'themify' ), 'manage_options', 'builder-contact', array( $this, 'create_admin_page' ) );
+		add_submenu_page(
+			'edit.php?post_type=contact_messages',
+			__( 'Captcha Settings', 'builder-contact' ),
+			__( 'Captcha Settings', 'builder-contact' ),
+			'manage_options',
+			'builder-contact',
+			array( $this, 'create_admin_page' )
+		);
 
 	}
 
@@ -18,7 +23,7 @@ class Builder_Contact_Admin {
 		?>
 		<div class="wrap">
 			<?php screen_icon(); ?>
-			<h2><?php _e( 'Builder Contact Module', 'builder-contact' ); ?></h2>           
+			<h2><?php _e( 'Builder Contact Captcha', 'builder-contact' ); ?></h2>
 			<form method="post" action="options.php">
 				<?php
 				// This prints out all hidden setting fields
