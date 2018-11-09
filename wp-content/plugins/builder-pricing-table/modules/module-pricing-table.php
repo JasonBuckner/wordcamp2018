@@ -32,11 +32,11 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 				'id' => 'mod_color_pricing_table',
 				'type' => 'layout',
                                 'mode'=>'sprite',
-                                'class'=>'tb-colors',
+                                'class'=>'tb_colors',
 				'label' => __('Appearance', 'builder-pricing-table'),
 				'options' => $colors,
 				'render_callback' => array(
-					'binding' => 'live'
+                                    'binding' => 'live'
 				)
 			),
 			array(
@@ -55,7 +55,8 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 				'label' => __('Title', 'builder-pricing-table'),
 				'class' => 'large',
 				'render_callback' => array(
-					'binding' => 'live'
+                                    'binding' => 'live',
+                                    'live-selector'=>'.module-pricing-table-title>span'
 				)
 			),
 			array(
@@ -74,7 +75,8 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 				'after' => sprintf('<br/><small>%s</small>',
 						__('(eg. $29)', 'builder-pricing-table')),
 				'render_callback' => array(
-					'binding' => 'live'
+                                    'binding' => 'live',
+                                    'live-selector'=>'.module-pricing-table-price'
 				)
 			),
 			array(
@@ -85,7 +87,8 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 				'after' => sprintf('<br/><small>%s</small>',
 						__('(eg. per month)', 'builder-pricing-table')),
 				'render_callback' => array(
-					'binding' => 'live'
+                                    'binding' => 'live',
+                                    'live-selector'=>'.module-pricing-table-reccuring-fee'
 				)
 			),
 			array(
@@ -96,7 +99,8 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 				'after' => sprintf('<br/><small>%s</small>',
 						__('(eg. For Basic Users)', 'builder-pricing-table')),
 				'render_callback' => array(
-					'binding' => 'live'
+                                    'binding' => 'live',
+                                    'live-selector'=>'.module-pricing-table-description'
 				)
 			),
 			array(
@@ -128,7 +132,8 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 				'label' => __('Buy Button Text', 'builder-pricing-table'),
 				'class' => 'large',
 				'render_callback' => array(
-					'binding' => 'live'
+                                    'binding' => 'live',
+                                    'live-selector'=>'.module-pricing-table-button'
 				)
 			),
 			array(
@@ -157,7 +162,7 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 						),
 						'default' => 'default',
 						'render_callback' => array(
-							'binding' => 'live'
+							'binding' => FALSE
 						)
 					)
 				)
@@ -170,7 +175,8 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 				'after' => sprintf('<br/><small>%s</small>',
 						__('(eg. Popular)', 'builder-pricing-table')),
 				'render_callback' => array(
-					'binding' => 'live'
+                                    'binding' => 'live',
+                                    'live-selector'=>'.module-pricing-table-pop'
 				)
 			),
 			array(
@@ -193,7 +199,7 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 				'id' => 'css_pricing_table',
 				'type' => 'text',
 				'label' => __('Additional CSS Class', 'themify'),
-				'help' => sprintf( '<br/><small>%s</small>', __('Add additional CSS class(es) for custom styling', 'themify') ),
+				'help' => sprintf( '<br/><small>%s</small>', __('Add additional CSS class(es) for custom styling (<a href="https://themify.me/docs/builder#additional-css-class" target="_blank">learn more</a>).', 'themify') ),
 				'class' => 'large exclude-from-reset-field',
 				'render_callback' => array(
 					'binding' => 'live'
@@ -216,51 +222,94 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 
 	public function get_styling() {
 		$table_header = array(
-                        // Background
-                        self::get_seperator('image_background',__('Background', 'themify'),false),
+			// Background
+						self::get_seperator('image_background',__('Background', 'themify'),false),
                         self::get_color('.module.module-pricing-table .module-pricing-table-header','mod_title_background_color',__('Background Color', 'themify'),'background-color'),
-                        // Font
+			// Font
                         self::get_seperator('font',__('Font', 'themify')),
                         self::get_font_family('.module.module-pricing-table .module-pricing-table-header','mod_title_font_family'),
+						! method_exists( __CLASS__, 'get_element_font_weight' ) ? '' : self::get_element_font_weight( '.module.module-pricing-table .module-pricing-table-header','mod_title_font_weight' ),
                         self::get_color('.module.module-pricing-table .module-pricing-table-header', 'mod_title_font_color', __('Font Color', 'themify')),
                         self::get_font_size('.module.module-pricing-table .module-pricing-table-header','font_size_title'),
                         self::get_line_height('.module.module-pricing-table .module-pricing-table-header','mod_line_height_title'),
-                        self::get_text_align('.module.module-pricing-table .module-pricing-table-header','mod_text_align_title')
-                       
+						self::get_letter_spacing('.module.module-pricing-table .module-pricing-table-title', 'letter_spacing_title'),
+                        self::get_text_align('.module.module-pricing-table .module-pricing-table-header','mod_text_align_title'),
+			// Font Price
+                        self::get_seperator('font',__('Font Price', 'themify')),
+                        self::get_font_family('.module.module-pricing-table .module-pricing-table-price','font_family_price'),
+						! method_exists( __CLASS__, 'get_element_font_weight' ) ? '' : self::get_element_font_weight( '.module.module-pricing-table .module-pricing-table-price','font_weight_price' ),
+                        self::get_color('.module.module-pricing-table .module-pricing-table-price', 'font_color_price', __('Font Color', 'themify')),
+                        self::get_font_size('.module.module-pricing-table .module-pricing-table-price','font_size_price'),
+                        self::get_line_height('.module.module-pricing-table .module-pricing-table-price','line_height_price'),
+						self::get_letter_spacing('.module.module-pricing-table .module-pricing-table-price', 'letter_spacing_price'),
+                        self::get_text_align('.module.module-pricing-table .module-pricing-table-price','text_align_price'),
+			// Font Description
+                        self::get_seperator('font',__('Font Description', 'themify')),
+                        self::get_font_family('.module.module-pricing-table .module-pricing-table-description','font_family_description'),
+						! method_exists( __CLASS__, 'get_element_font_weight' ) ? '' : self::get_element_font_weight( '.module.module-pricing-table .module-pricing-table-description','font_weight_description' ),
+                        self::get_color('.module.module-pricing-table .module-pricing-table-description', 'font_color_description', __('Font Color', 'themify')),
+                        self::get_font_size('.module.module-pricing-table .module-pricing-table-description','font_size_description'),
+                        self::get_line_height('.module.module-pricing-table .module-pricing-table-description','line_height_description'),
+						self::get_letter_spacing('.module.module-pricing-table .module-pricing-table-description', 'letter_spacing_description'),
+                        self::get_text_align('.module.module-pricing-table .module-pricing-table-description','text_align_description')
 		);
 		// Features list
 		$feature_list = array(
-                        // Background
+			// Background
                         self::get_seperator('image_background',__('Background', 'themify'),false),
                         self::get_color('.module-pricing-table .module-pricing-table-content','mod_feature_bg_color',__('Background Color', 'themify'),'background-color'),
-                        // Font
+			// Font
                         self::get_seperator('font',__('Font', 'themify')),
                         self::get_font_family('.module-pricing-table .module-pricing-table-content','mod_feature_font_family'),
+						! method_exists( __CLASS__, 'get_element_font_weight' ) ? '' : self::get_element_font_weight( '.module-pricing-table .module-pricing-table-content','mod_feature_font_weight' ),
                         self::get_color('.module-pricing-table .module-pricing-table-content', 'mod_feature_font_color', __('Font Color', 'themify')),
                         self::get_font_size('.module-pricing-table .module-pricing-table-content','font_size_content'),
-                        self::get_line_height('.module-pricing-table .module-pricing-table-content','mod_line_height_content'),
-                        self::get_text_align('.module-pricing-table .module-pricing-table-content','mod_text_align_content')
+                        self::get_line_height('.module-pricing-table .module-pricing-table-features','mod_line_height_content'),
+                        self::get_text_align('.module-pricing-table .module-pricing-table-content','mod_text_align_content'),
+			// Padding
+                        self::get_seperator('padding',__('Padding', 'themify')),
+                        self::get_padding('.module-pricing-table .module-pricing-table-features','f_l_padding')
 		);
 		//Pop text
 		$pop_text = array(
                         self::get_font_family('.module-pricing-table .module-pricing-table-pop','mod_pop_font_family'),
-                        self::get_color('.module-pricing-table .module-pricing-table-pop', 'mod_pop_font_color', __('Font Color', 'themify'))
+						! method_exists( __CLASS__, 'get_element_font_weight' ) ? '' : self::get_element_font_weight( '.module-pricing-table .module-pricing-table-pop','mod_pop_font_weight' ),
+                        self::get_color('.module-pricing-table .module-pricing-table-pop', 'mod_pop_font_color', __('Font Color', 'themify')),
+                        self::get_font_size('.module-pricing-table .module-pricing-table-pop','mod_pop_font_size')
 		);
 		//Buy button
 		$buy_button = array(
-                        // Background
+			// Background
                         self::get_seperator('image_background',__('Background', 'themify'),false),
                         self::get_color('.module-pricing-table .module-pricing-table-button','mod_button_bg_color',__('Background Color', 'themify'),'background-color'),
-                        // Font
+			// Font
                         self::get_seperator('font',__('Font', 'themify')),
                         self::get_font_family('.module-pricing-table .module-pricing-table-button','mod_button_font_family'),
+						! method_exists( __CLASS__, 'get_element_font_weight' ) ? '' : self::get_element_font_weight( '.module-pricing-table .module-pricing-table-button','mod_button_font_weight' ),
                         self::get_color('.module-pricing-table .module-pricing-table-button', 'mod_button_font_color', __('Font Color', 'themify')),
                         self::get_font_size('.module-pricing-table .module-pricing-table-button','font_size_button'),
                         self::get_line_height('.module-pricing-table .module-pricing-table-button','mod_line_height_button'),
-                        self::get_text_align('.module-pricing-table .module-pricing-table-button','mod_text_align_button')
+                        self::get_text_align('.module-pricing-table .module-pricing-table-button','mod_text_align_button'),
+			// Padding
+                        self::get_seperator('padding',__('Padding', 'themify')),
+                        self::get_padding('.module-pricing-table .module-pricing-table-button','b_b_padding'),
+			// Margin
+                        self::get_seperator('margin',__('Margin', 'themify')),
+                        self::get_margin('.module-pricing-table .module-pricing-table-button','buy_button_margin'),
+			// Border
+                        self::get_seperator('border',__('Border', 'themify')),
+                        self::get_border('.module-pricing-table .module-pricing-table-button','b_b_border')
 		);
+		$font_color_selectors = array('.ui.module-pricing-table');
+        $font_color_id = 'font_color';
+        $font_color_label = __('Font Color', 'themify');
+        if(method_exists( __CLASS__, 'get_color_type' )){
+            $font_color = self::get_color($font_color_selectors, $font_color_id, $font_color_label,'color',true);
+        }else{
+            $font_color = self::get_color($font_color_selectors, $font_color_id, $font_color_label);
+        }
 		$general = array(
-                        //bacground
+			//bacground
                         self::get_seperator('image_bacground',__( 'Background', 'themify' ),false),
                         self::get_image( '.ui.module-pricing-table'),
                         self::get_color( '.ui.module-pricing-table', 'background_color',__( 'Background Color', 'themify' ),'background-color'),
@@ -268,13 +317,24 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 			// Font
                         self::get_seperator('font',__('Font', 'themify')),
                         self::get_font_family('.ui.module-pricing-table'),
-                        // Padding
+						! method_exists( __CLASS__, 'get_element_font_weight' ) ? '' : self::get_element_font_weight( '.ui.module-pricing-table' ),
+						! method_exists( __CLASS__, 'get_color_type' ) ? '' : self::get_color_type('font_color_type',__('Font Color Type', 'themify'),'font_color','font_gradient_color'),
+						$font_color,
+						! method_exists( __CLASS__, 'get_gradient_color' ) ? '' : self::get_gradient_color(array( '.module-pricing-table .module-pricing-table-header.transparent i:before','.module-pricing-table .module-pricing-table-header.transparent .module-pricing-table-title span','.module-pricing-table .module-pricing-table-header.transparent .module-pricing-table-price','.module-pricing-table .module-pricing-table-header.transparent .module-pricing-table-reccuring-fee','.module-pricing-table .module-pricing-table-header.transparent .module-pricing-table-description' ),'font_gradient_color',__('Font Color', 'themify')),
+						self::get_font_size('.ui.module-pricing-table'),
+						self::get_line_height('.ui.module-pricing-table'),
+						self::get_letter_spacing('.ui.module-pricing-table'),
+						self::get_text_align('.ui.module-pricing-table'),
+						self::get_text_transform('.ui.module-pricing-table'),
+						self::get_font_style('.ui.module-pricing-table'),
+                        self::get_text_decoration('.ui.module-pricing-table','text_decoration_regular'),
+			// Padding
                         self::get_seperator('padding',__('Padding', 'themify')),
                         self::get_padding('.module-pricing-table'),
 			// Margin
                         self::get_seperator('margin',__('Margin', 'themify')),
                         self::get_margin('.module-pricing-table'),
-                        // Border
+			// Border
                         self::get_seperator('border',__('Border', 'themify')),
                         self::get_border('.module-pricing-table')
 		);
@@ -311,12 +371,21 @@ class TB_Pricing_Table_Module extends Themify_Builder_Component_Module {
 
 	protected function _visual_template() {?>
 		<#
+		var font_color_type = '';
+		if(themifybuilderapp.activeModel != null){
+			var tempData = themifybuilderapp.Forms.serialize('tb_options_styling');
+			font_color_type = ('font_color_type' in  tempData && tempData['font_color_type'].indexOf('gradient') !== -1)?'gradient':'solid';
+			font_color_type = 'tb-font-color-' + font_color_type;
+		}
+		#>
+		<#
                 if(!data.mod_color_pricing_table){
                     data.mod_color_pricing_table = 'blue';
 		}
                 var appearance = data.mod_appearance_pricing_table?data.mod_appearance_pricing_table.replace(/\|/ig,' '):''; #>
-		<div class="ui module module-<?php echo $this->slug; ?> <# data.mod_pop_text_pricing_table && print( 'pricing-pop' ) #> <# data.mod_enlarge_pricing_table == 'enlarge' && print( 'pricing-enlarge' ) #> {{ appearance }} {{ data.mod_color_pricing_table }}">
-			<?php do_action('themify_builder_before_template_content_render'); ?>
+		<div class="ui module module-<?php echo $this->slug; ?> {{ font_color_type }} <# data.mod_pop_text_pricing_table && print( 'pricing-pop' ) #> <# data.mod_enlarge_pricing_table == 'enlarge' && print( 'pricing-enlarge' ) #> {{ appearance }} {{ data.mod_color_pricing_table }}">
+			<!--insert-->
+                        <?php do_action('themify_builder_before_template_content_render'); ?>
 
 			<# if( data.mod_pop_text_pricing_table ) { #>
 				<span class="fa module-pricing-table-pop">{{ data.mod_pop_text_pricing_table }}</span>

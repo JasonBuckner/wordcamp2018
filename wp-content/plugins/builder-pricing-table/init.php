@@ -2,8 +2,8 @@
 
 /*
   Plugin Name:  Builder Pricing Table
-  Plugin URI:   http://themify.me/addons/pricing-table
-  Version:      1.1.0
+  Plugin URI:   https://themify.me/addons/pricing-table
+  Version:      1.1.4
   Author:       Themify
   Description:  Themify Builder addon for making pricing tables. Required to use with Themify Builder plugin or any Themify theme with Builder enabled. It requires to use with the latest version of any Themify theme or the Themify Builder plugin.
   Text Domain:  builder-pricing-table
@@ -36,6 +36,7 @@ class Builder_Pricing_Table {
         $this->constants();
         add_action('plugins_loaded', array($this, 'i18n'), 5);
         add_action('themify_builder_setup_modules', array($this, 'register_module'));
+		add_filter( 'plugin_row_meta', array( $this, 'themify_plugin_meta'), 10, 2 );
         if (is_admin()) {
             add_action('themify_builder_admin_enqueue', array($this, 'admin_enqueue'));
             add_action('init', array($this, 'updater'));
@@ -51,6 +52,16 @@ class Builder_Pricing_Table {
         $this->dir = trailingslashit(plugin_dir_path(__FILE__));
     }
 
+	public function themify_plugin_meta( $links, $file ) {
+		if ( plugin_basename( __FILE__ ) == $file ) {
+			$row_meta = array(
+			  'changelogs'    => '<a href="' . esc_url( 'https://themify.me/changelogs/' ) . basename( dirname( $file ) ) .'.txt" target="_blank" aria-label="' . esc_attr__( 'Plugin Changelogs', 'builder-pricing-table' ) . '">' . esc_html__( 'View Changelogs', 'builder-pricing-table' ) . '</a>'
+			);
+	 
+			return array_merge( $links, $row_meta );
+		}
+		return (array) $links;
+	}
     public function i18n() {
         load_plugin_textdomain('builder-pricing-table', false, '/languages');
     }

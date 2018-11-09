@@ -56,11 +56,11 @@ if (TFCache::start_cache($mod_name, self::$post_id, array('ID' => $module_ID))):
     ?>
 
     <div <?php echo self::get_element_attributes($container_props); ?>>
-
+        <!--insert-->
         <?php do_action('themify_builder_before_template_content_render'); ?>
 
         <?php if ($fields_args['mod_pop_text_pricing_table'] !== ''): ?>
-            <span class="fa module-pricing-table-pop"><?php echo $fields_args['mod_pop_text_pricing_table']; ?></span>
+            <span class="module-pricing-table-pop"><?php echo $fields_args['mod_pop_text_pricing_table']; ?></span>
         <?php endif; ?>
 
         <div class="module-pricing-table-header ui <?php echo $fields_args['mod_color_pricing_table'], ' ', $fields_args['mod_appearance_pricing_table']; ?>" >

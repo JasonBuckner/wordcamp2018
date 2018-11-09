@@ -1,1 +1,18 @@
-.multi_link_pricing_table.tf_fields_count_2>.themify_builder_field{width:100%;padding-bottom:5px}
+.multi_link_pricing_table.tf_fields_count_2>.tb_field{width:100%;padding-bottom:5px;}.tb_module_front.module-pricing-table {border: 0;}
+/* Docked Panel Fields */
+.tb_module_panel_docked .tb_field .multi_link_pricing_table,
+.tb_module_panel_docked .multi_link_pricing_table .tb_field,
+.tb_module_panel_docked .mod_title_pricing_table input[type="text"],
+.tb_module_panel_docked .mod_title_icon_pricing_table input[type="text"],
+.tb_module_panel_docked .mod_price_pricing_table input[type="text"],
+.tb_module_panel_docked .mod_recurring_fee_pricing_table input[type="text"],
+.tb_module_panel_docked .mod_description_pricing_table input[type="text"],
+.tb_module_panel_docked .mod_feature_list_pricing_table .tb_input textarea,
+.tb_module_panel_docked .mod_unavailable_feature_list_pricing_table .tb_input textarea,
+.tb_module_panel_docked .mod_button_text_pricing_table input[type="text"],
+.tb_module_panel_docked .multi_link_pricing_table input[type="text"],
+.tb_module_panel_docked .mod_pop_text_pricing_table input[type="text"],
+.tb_module_panel_docked .css_pricing_table input[type="text"] {
+	width: 100%;
+	max-width: none;
+}
