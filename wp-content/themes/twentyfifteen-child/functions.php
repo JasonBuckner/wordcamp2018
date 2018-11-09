@@ -11,7 +11,6 @@
  * @since 1.0.0
  */
 function child_theme_load_assets() {
-	$parent_style = 'twentyfifteen-style'; 
 	
 	// Load the main stylesheet first.
 	if ( is_child_theme() ) {

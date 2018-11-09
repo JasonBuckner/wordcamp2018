@@ -1,0 +1,27 @@
+/*
+Theme Name: Child Theme of twentyfifteen
+Template:     twentyfifteen
+Theme URI: https://wordpress.org/themes/twentyfifteen/
+Author: Jason
+Author URI: http://frutke.com
+Description: Yadda, yadda, yadda.
+Version: 0.1
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: twentyfifteen
+Tags: one-column, two-columns, right-sidebar, flexible-header, accessibility-ready, custom-colors, custom-header, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, post-formats, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+body {
+
+    background: rgb(255, 230, 0);
+
+}
+
+.entry-content h1, .entry-summary h1, .page-content h1, .comment-content h1 {
+    font-size: 77px;
+    font-size: 7.7rem;
+}
